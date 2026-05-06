@@ -9,9 +9,12 @@ export function middleware(req: NextRequest) {
   if (isProduction) {
     const allowed =
       pathname === "/" ||
-      pathname.startsWith("/images") ||
-      pathname.startsWith("/_next") ||
-      pathname === "/api/contact";
+      pathname === "/api/contact" ||
+      pathname === "/favicon.ico" ||
+      pathname === "/robots.txt" ||
+      pathname === "/sitemap.xml" ||
+      pathname.startsWith("/images/") ||
+      pathname.startsWith("/_next/");
 
     if (!allowed) {
       return new Response(null, { status: 404 });
