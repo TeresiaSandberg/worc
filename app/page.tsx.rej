@@ -1,0 +1,226 @@
+diff a/app/page.tsx b/app/page.tsx	(rejected hunks)
+@@ -1,64 +1,173 @@
+-import { cookies } from "next/headers";
+-import Link from "next/link";
+-import { redirect } from "next/navigation";
++"use client";
+ 
+-/** cookies() → måste vara dynamisk så `/` inte prerenderas bort eller ger fel i dev. */
+-export const dynamic = "force-dynamic";
++import { FormEvent, useState } from "react";
++
++export default function Page() {
++  const [name, setName] = useState("");
++  const [email, setEmail] = useState("");
++  const [message, setMessage] = useState("");
++  const [isSending, setIsSending] = useState(false);
++  const [sendState, setSendState] = useState<"idle" | "sent" | "error">("idle");
++
++  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
++    e.preventDefault();
++    setIsSending(true);
++    setSendState("idle");
+ 
+-export default function HomePage() {
+-  const raw = cookies().get("worc_session")?.value;
+-  if (raw) {
+-    let sessionJsonOk = false;
+     try {
+-      JSON.parse(raw);
+-      sessionJsonOk = true;
++      const res = await fetch("/api/contact", {
++        method: "POST",
++        headers: {
++          "Content-Type": "application/json",
++        },
++        body: JSON.stringify({ name, email, message }),
++      });
++
++      if (!res.ok) {
++        throw new Error("Request failed");
++      }
++
++      setSendState("sent");
++      setName("");
++      setEmail("");
++      setMessage("");
+     } catch {
+-      /* ogiltig cookie — visa startsidan */
+-    }
+-    if (sessionJsonOk) {
+-      redirect("/admin");
++      setSendState("error");
++    } finally {
++      setIsSending(false);
+     }
+   }
+ 
+   return (
+-    <div className="relative flex min-h-screen flex-col bg-slate-950 text-white">
+-      <div
+-        className="pointer-events-none absolute inset-0 opacity-40"
+-        style={{
+-          backgroundImage:
+-            "radial-gradient(circle at 20% 20%, rgb(45 212 191 / 0.25), transparent 45%), radial-gradient(circle at 80% 0%, rgb(99 102 241 / 0.2), transparent 40%), radial-gradient(circle at 50% 100%, rgb(15 118 110 / 0.35), transparent 50%)",
+-        }}
+-      />
+-      <header className="relative z-10 border-b border-white/10 px-6 py-5">
+-        <div className="mx-auto flex max-w-5xl items-center justify-between">
+-          <span className="text-xl font-bold tracking-tight">WORC</span>
+-          <div className="flex items-center gap-2">
+-            <Link
+-              href="/signup"
+-              className="rounded-lg border border-white/30 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+-            >
+-              Skapa nytt bolag
+-            </Link>
+-            <Link
+-              href="/login"
+-              className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-slate-100"
+-            >
+-              Logga in
+-            </Link>
++    <main className="bg-black text-white min-h-screen">
++      {/* HERO */}
++      <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6">
++        <div
++          className="absolute inset-0 bg-cover bg-center"
++          style={{ backgroundImage: "url('/images/hero-stockholm.png')" }}
++        />
++        <div className="absolute inset-0 bg-black/60" />
++        <div className="relative z-10 flex flex-col items-center">
++          <h1 className="text-4xl md:text-6xl tracking-widest font-light">
++            WORC STOCKHOLM
++          </h1>
++
++          <p className="mt-4 text-sm md:text-base tracking-[0.3em] text-gray-400">
++            THE OPERATIONAL CORE
++          </p>
++
++          <div className="mt-12 text-xl md:text-2xl font-light max-w-xl">
++            Structure creates clarity.
+           </div>
++
++          <a
++            href="#contact"
++            className="mt-16 border border-white px-6 py-3 text-sm tracking-widest hover:bg-white hover:text-black transition"
++          >
++            CONTACT
++          </a>
+         </div>
+-      </header>
+-      <main className="relative z-10 mx-auto flex max-w-5xl flex-1 flex-col justify-center px-6 py-16">
+-        <p className="text-sm font-medium uppercase tracking-widest text-teal-300/90">
+-          Arbetsgivarplattform
+-        </p>
+-        <h1 className="mt-3 max-w-2xl text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+-          Ekonomi, HR, tid och lön — ett spår, en motor.
+-        </h1>
+-        <p className="mt-6 max-w-xl text-lg text-slate-300">
+-          Logga in för att öppna admin och dina sidor.
++      </section>
++
++      {/* SECTION 1 */}
++      <section className="relative min-h-screen flex items-center justify-center px-6 text-center">
++        <div
++          className="absolute inset-0 bg-cover bg-center grayscale"
++          style={{ backgroundImage: "url('/images/section-2-structure.jpg')" }}
++        />
++        <div className="absolute inset-0 bg-black/60" />
++        <div className="relative z-10 max-w-2xl text-2xl md:text-3xl font-light">
++          Complexity is not the problem.
++          <br />
++          Lack of structure is.
++        </div>
++      </section>
++
++      {/* SECTION 2 */}
++      <section className="relative min-h-screen flex items-center justify-center px-6 text-center">
++        <div
++          className="absolute inset-0 bg-cover bg-center grayscale"
++          style={{ backgroundImage: "url('/images/section-door.jpg')" }}
++        />
++        <div className="absolute inset-0 bg-black/70" />
++        <div className="relative z-10 max-w-2xl text-2xl md:text-3xl font-light">
++          Systems turn chaos into structure.
++        </div>
++      </section>
++
++      {/* SECTION 3 */}
++      <section className="relative min-h-screen flex items-center justify-center px-6 text-center">
++        <div
++          className="absolute inset-0 bg-cover bg-center grayscale"
++          style={{ backgroundImage: "url('/images/section-3-landscape.png')" }}
++        />
++        <div className="absolute inset-0 bg-black/55" />
++        <div className="relative z-10 max-w-2xl text-2xl md:text-3xl font-light">
++          Built for operational reality.
++        </div>
++      </section>
++
++      {/* CONTACT */}
++      <section
++        id="contact"
++        className="min-h-screen flex flex-col items-center justify-center px-6 bg-black"
++      >
++        <h2 className="text-3xl md:text-4xl font-light tracking-widest">
++          CONTACT
++        </h2>
++
++        <form
++          className="mt-12 w-full max-w-md flex flex-col gap-4"
++          onSubmit={handleSubmit}
++        >
++          <input
++            type="text"
++            placeholder="Name"
++            value={name}
++            onChange={(e) => setName(e.target.value)}
++            required
++            className="bg-transparent border border-gray-600 p-3 focus:outline-none"
++          />
++
++          <input
++            type="email"
++            placeholder="Email"
++            value={email}
++            onChange={(e) => setEmail(e.target.value)}
++            required
++            className="bg-transparent border border-gray-600 p-3 focus:outline-none"
++          />
++
++          <textarea
++            placeholder="Message"
++            rows={4}
++            value={message}
++            onChange={(e) => setMessage(e.target.value)}
++            required
++            className="bg-transparent border border-gray-600 p-3 focus:outline-none"
++          />
++
++          <button
++            type="submit"
++            disabled={isSending}
++            className="border border-white py-3 tracking-widest hover:bg-white hover:text-black transition"
++          >
++            {isSending ? "SENDING..." : "SEND"}
++          </button>
++
++          {sendState === "sent" && (
++            <p className="text-sm text-green-400 text-center">Sent</p>
++          )}
++          {sendState === "error" && (
++            <p className="text-sm text-red-400 text-center">Error</p>
++          )}
++        </form>
++
++        <p className="mt-8 text-sm text-gray-500 text-center max-w-md">
++          We are currently building the next generation operational platform for
++          workforce, payroll and HR.
+         </p>
+-      </main>
+-    </div>
++      </section>
++    </main>
+   );
+ }

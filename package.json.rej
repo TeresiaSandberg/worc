@@ -1,0 +1,24 @@
+diff a/package.json b/package.json	(rejected hunks)
+@@ -14,14 +14,21 @@
+     "test:tenant:v1": "npx --yes tsx@4.19.2 scripts/verify-tenant-v1.ts",
+     "db:import:tax": "node scripts/import-tax-table.cjs",
+     "db:import:tax:matrix": "node scripts/import-tax-table-to-matrix.cjs",
++    "db:backup": "node \"scripts/db/KLART!/backup-database.cjs\"",
++    "db:backup:test-restore": "node \"scripts/db/KLART!/backup-test-restore.cjs\"",
++    "checkpoint": "node \"scripts/db/KLART!/checkpoint.cjs\"",
+     "build": "next build",
+     "start": "next start"
+   },
+   "dependencies": {
++    "@stripe/react-stripe-js": "^6.3.0",
++    "@stripe/stripe-js": "^9.4.0",
+     "next": "14.2.35",
++    "nodemailer": "^8.0.7",
+     "pg": "^8.12.0",
+     "react": "18.2.0",
+-    "react-dom": "18.2.0"
++    "react-dom": "18.2.0",
++    "stripe": "^17.7.0"
+   },
+   "devDependencies": {
+     "@tailwindcss/postcss": "^4.2.4",
