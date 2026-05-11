@@ -1,24 +1,45 @@
 {
-    "name": "worc-landing",
-    "private": true,
-    "scripts": {
-      "dev": "next dev",
-      "build": "next build",
-      "start": "next start"
-    },
-    "dependencies": {
-      "next": "14.2.35",
-      "nodemailer": "^6.9.16",
-      "pg": "^8.12.0",
-      "react": "18.2.0",
-      "react-dom": "18.2.0"
-    },
-    "devDependencies": {
-      "@types/node": "20.12.7",
-      "@types/nodemailer": "^6.4.17",
-      "@types/pg": "^8.11.6",
-      "@types/react": "18.2.66",
-      "@types/react-dom": "18.2.22",
-      "typescript": "5.4.5"
-    }
+  "name": "worc",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev:verify && next dev",
+    "dev:verify": "node verify-root.js",
+    "dev:clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true});\" && node scripts/ensure-pages-error.cjs && next dev -p 3000",
+    "dev:fresh": "npx --yes kill-port@2.0.1 3000 3001 3002 && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && node scripts/ensure-pages-error.cjs && next dev -p 3000",
+    "test:tax:regression": "node scripts/db/regression-tax-payroll.cjs",
+    "test:leave:regression": "node scripts/db/regression-leave-payroll.cjs",
+    "test:concept-overlap:regression": "node scripts/regression-concept-overlap.cjs",
+    "test:concept-delete:regression": "node scripts/regression-concept-delete.cjs",
+    "test:schedule:regression": "node scripts/regression-schedule-overrides.cjs",
+    "test:regression": "npm run test:tax:regression && npm run test:leave:regression && npm run test:concept-overlap:regression && npm run test:concept-delete:regression && npm run test:schedule:regression",
+    "test:tenant:v1": "npx --yes tsx@4.19.2 scripts/verify-tenant-v1.ts",
+    "db:import:tax": "node scripts/import-tax-table.cjs",
+    "db:import:tax:matrix": "node scripts/import-tax-table-to-matrix.cjs",
+    "db:backup": "node \"scripts/db/KLART!/backup-database.cjs\"",
+    "db:backup:test-restore": "node \"scripts/db/KLART!/backup-test-restore.cjs\"",
+    "checkpoint": "node \"scripts/db/KLART!/checkpoint.cjs\"",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^6.3.0",
+    "@stripe/stripe-js": "^9.4.0",
+    "next": "14.2.35",
+    "nodemailer": "^8.0.7",
+    "pg": "^8.12.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "stripe": "^17.7.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "20.12.7",
+    "@types/nodemailer": "^6.4.17",
+    "@types/pg": "^8.11.6",
+    "@types/react": "18.2.66",
+    "@types/react-dom": "18.2.22",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^4.2.4",
+    "typescript": "5.4.5"
   }
+}

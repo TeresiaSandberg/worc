@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "WORC Stockholm",
-  description: "The Operational Core",
+  title: "WORC",
+  description: "WORC platform",
 };
 
 export default function RootLayout({
