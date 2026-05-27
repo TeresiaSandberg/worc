@@ -186,66 +186,128 @@ export default function Page() {
               Prismodell
             </h2>
             <p className="mt-4 max-w-2xl text-pretty text-2xl font-light leading-snug tracking-tight text-zinc-900 md:text-3xl">
-              Tydliga paket utan krångliga tillägg.
+              Ett pris. Hela flödet.
             </p>
-            <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-zinc-600 md:text-base">
-              Tydliga paket utan dolda tillägg eller krångliga konsultupplägg.
+            <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-zinc-600 md:text-lg">
+              WORC har fasta månadspriser baserade på företagets
+              administrativa volym. Alla centrala funktioner ingår från start:
+              HR, tid, lön, fakturering, ekonomi och rapportering. Du betalar
+              inte extra för varje modul, användare eller klick. Du vet vad
+              systemet kostar varje månad.
             </p>
-            <div className="mt-14 grid gap-8 lg:grid-cols-3">
-              <article className="flex flex-col border border-zinc-200 bg-white p-8 md:p-10">
+
+            <div className="mt-12 border-l border-zinc-300 pl-6">
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
+                Ingår i alla paket
+              </p>
+              <ul className="mt-4 grid gap-x-8 gap-y-2 text-sm leading-relaxed text-zinc-700 sm:grid-cols-2 md:grid-cols-3">
+                <li>HR</li>
+                <li>Anställningar</li>
+                <li>Tid</li>
+                <li>Lön</li>
+                <li>Lönespecar</li>
+                <li>Fakturaunderlag</li>
+                <li>Fakturering</li>
+                <li>Ekonomi</li>
+                <li>Rapporter</li>
+                <li>Behörigheter</li>
+                <li>Standardflöden</li>
+              </ul>
+            </div>
+
+            <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <article className="flex flex-col border border-zinc-200 bg-white p-8">
                 <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-500">
                   Start
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-                  För mindre företag och egenföretagare.
+                  För mindre företag med låg administrativ volym.
                 </p>
-                <ul className="mt-8 flex flex-1 flex-col gap-3 text-sm leading-relaxed text-zinc-700">
-                  <li>Fakturering</li>
-                  <li>Enkel lönehantering</li>
-                  <li>Tidrapportering</li>
-                  <li>Grundläggande administration</li>
-                </ul>
-                <p className="mt-10 border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
-                  249 kr/mån
+                <p className="mt-6 text-sm leading-relaxed text-zinc-500">
+                  Riktmärke: upp till ca 10 löner/mån eller 100 fakturor/mån.
+                </p>
+                <p className="mt-auto border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
+                  299 kr/mån
                 </p>
               </article>
-              <article className="flex flex-col border border-zinc-900 bg-zinc-900 p-8 text-white md:p-10">
+              <article className="flex flex-col border border-zinc-900 bg-zinc-900 p-8 text-white">
                 <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-400">
-                  Plus
+                  Growth
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-300">
-                  För växande företag.
+                  För växande företag med fler löner, fakturor och flöden.
                 </p>
-                <ul className="mt-8 flex flex-1 flex-col gap-3 text-sm leading-relaxed text-zinc-200">
-                  <li>Allt i Start</li>
-                  <li>Flera anställda</li>
-                  <li>HR</li>
-                  <li>Frånvaro</li>
-                  <li>Utlägg</li>
-                  <li>Mer automatisering</li>
-                </ul>
-                <p className="mt-10 border-t border-zinc-700 pt-8 text-sm font-medium text-white">
-                  899 kr/mån
+                <p className="mt-6 text-sm leading-relaxed text-zinc-400">
+                  Riktmärke: upp till ca 50 löner/mån eller 500 fakturor/mån.
+                </p>
+                <p className="mt-auto border-t border-zinc-700 pt-8 text-sm font-medium text-white">
+                  599 kr/mån
                 </p>
               </article>
-              <article className="flex flex-col border border-zinc-200 bg-white p-8 md:p-10">
+              <article className="flex flex-col border border-zinc-200 bg-white p-8">
+                <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-500">
+                  Scale
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-zinc-600">
+                  För företag med högre administrativ belastning.
+                </p>
+                <p className="mt-6 text-sm leading-relaxed text-zinc-500">
+                  Riktmärke: upp till ca 150 löner/mån eller 2 000
+                  fakturor/mån.
+                </p>
+                <p className="mt-auto border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
+                  999 kr/mån
+                </p>
+              </article>
+              <article className="flex flex-col border border-zinc-200 bg-white p-8">
                 <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-500">
                   Enterprise
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-                  För företag med större behov.
+                  För större volymer, flera bolag eller mer komplexa flöden.
                 </p>
-                <ul className="mt-8 flex flex-1 flex-col gap-3 text-sm leading-relaxed text-zinc-700">
-                  <li>Kollektivavtal</li>
-                  <li>Anpassade flöden</li>
-                  <li>Prioriterad support</li>
-                  <li>Anpassad onboarding</li>
-                </ul>
-                <p className="mt-10 border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
+                <p className="mt-6 text-sm leading-relaxed text-zinc-500">
+                  Skräddarsytt utifrån verksamhet och volym.
+                </p>
+                <p className="mt-auto border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
                   Offert
                 </p>
               </article>
             </div>
+
+            <p className="mt-10 max-w-3xl text-pretty text-sm leading-relaxed text-zinc-600 md:text-base">
+              WORC säljs som en helhet — inte som moduler. Du väljer paket
+              efter administrativ volym, inte efter vilka funktioner du vill
+              låsa upp. Det är den samlade volymen som styr nivån: en kund med
+              få löner men stora fakturaflöden landar på en högre nivå än
+              löneantalet ensamt antyder.
+            </p>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-2">
+              <div className="border-l border-zinc-300 pl-6">
+                <p className="text-base font-medium text-zinc-900">
+                  Kollektivavtal
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                  5 000 kr/år per avtal. Kollektivavtal kräver löpande
+                  underhåll, tolkning och uppdatering.
+                </p>
+              </div>
+              <div className="border-l border-zinc-300 pl-6">
+                <p className="text-base font-medium text-zinc-900">
+                  Kundanpassningar
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                  Offert eller timdebitering vid kundspecifika flöden eller
+                  specialanpassningar.
+                </p>
+              </div>
+            </div>
+
+            <p className="mt-10 max-w-2xl text-pretty text-sm leading-relaxed text-zinc-600 md:text-base">
+              Allt ingår i paketet. Det enda som kan tillkomma är licens för
+              kollektivavtal och kundspecifika anpassningar.
+            </p>
           </div>
         </section>
 
