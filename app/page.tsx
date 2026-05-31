@@ -289,8 +289,13 @@ export default function Page() {
                   Kollektivavtal
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                  5 000 kr/år per avtal. Kollektivavtal kräver löpande
-                  underhåll, tolkning och uppdatering.
+                  5 000 kr/år per avtal.
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-zinc-600">
+                  Kollektivavtal kräver löpande underhåll, tolkning och
+                  uppdatering. Årsavgiften täcker därför det fortsatta
+                  arbetet med att hålla avtalet uppdaterat och användbart
+                  i WORC.
                 </p>
               </div>
               <div className="border-l border-zinc-300 pl-6">
@@ -308,6 +313,65 @@ export default function Page() {
               Allt ingår i paketet. Det enda som kan tillkomma är licens för
               kollektivavtal och kundspecifika anpassningar.
             </p>
+
+            <div
+              className="mt-16 border-t border-zinc-200 pt-12"
+              aria-labelledby="kollektivavtal-leveranstider"
+            >
+              <h3
+                id="kollektivavtal-leveranstider"
+                className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-500"
+              >
+                Kollektivavtal och leveranstider
+              </h3>
+              <p className="mt-4 max-w-3xl text-pretty text-base leading-relaxed text-zinc-600 md:text-lg">
+                Behöver ni stöd för ett kollektivavtal i WORC? Leveranstiden
+                beror på om avtalet redan finns färdigt eller om det behöver
+                byggas upp från grunden.
+              </p>
+
+              <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <div className="border-l border-zinc-300 pl-6">
+                  <p className="text-base font-medium text-zinc-900">
+                    Befintligt kollektivavtal
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                    Om avtalet redan finns färdigt i WORC kan det normalt
+                    aktiveras inom 24 timmar.
+                  </p>
+                </div>
+
+                <div className="border-l border-zinc-300 pl-6">
+                  <p className="text-base font-medium text-zinc-900">
+                    Nytt kollektivavtal — standardspår
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                    När ett nytt kollektivavtal behöver byggas, tolkas och
+                    kvalitetssäkras från grunden gäller normalt följande
+                    riktlinjer:
+                  </p>
+                  <ul className="mt-3 flex flex-col gap-1 text-sm leading-relaxed text-zinc-700">
+                    <li>Tjänstemannaavtal: cirka 10 arbetsdagar</li>
+                    <li>Arbetaravtal: cirka 15–20 arbetsdagar</li>
+                  </ul>
+                </div>
+
+                <div className="border-l border-zinc-300 pl-6">
+                  <p className="text-base font-medium text-zinc-900">
+                    Nytt kollektivavtal — snabbspår
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                    För kunder som behöver komma igång snabbare finns
+                    möjlighet till snabbspår, där kollektivavtalet
+                    prioriteras i leveransen.
+                  </p>
+                  <ul className="mt-3 flex flex-col gap-1 text-sm leading-relaxed text-zinc-700">
+                    <li>Tjänstemannaavtal: cirka 5 arbetsdagar</li>
+                    <li>Arbetaravtal: cirka 10 arbetsdagar</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
