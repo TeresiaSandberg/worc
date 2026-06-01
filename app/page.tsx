@@ -351,8 +351,8 @@ export default function Page() {
                     riktlinjer:
                   </p>
                   <ul className="mt-3 flex flex-col gap-1 text-sm leading-relaxed text-zinc-700">
-                    <li>Tjänstemannaavtal: cirka 10 arbetsdagar</li>
-                    <li>Arbetaravtal: cirka 15–20 arbetsdagar</li>
+                    <li>Tjänstemannaavtal: cirka 15 arbetsdagar</li>
+                    <li>Arbetaravtal: cirka 25–30 arbetsdagar</li>
                   </ul>
                 </div>
 
