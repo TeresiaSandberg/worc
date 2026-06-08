@@ -3,54 +3,170 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "WORC — Mindre administration. Mer tid till företaget.",
+  title: "WORC — Ett system för HR, ekonomi, tid och lön.",
   description:
-    "WORC samlar lön, fakturering, tid och HR i ett enkelt system utvecklat i Stockholm för svenska företag.",
+    "WORC är ett sammanhållet verksamhetssystem för HR, ekonomi, tid och lön. Lämna manuella flöden, filer, dubbelregistrering och avstämningskaos bakom dig.",
 };
 
-const DEMO_MAIL =
-  "mailto:info@worc.se?subject=Demo%20WORC&body=Hej%2C%0D%0A%0D%0AJag%20vill%20boka%20demo%20av%20WORC.%0D%0A%0D%0A";
+const START_SUB_MAIL =
+  "mailto:info@worc.se?subject=Starta%20abonnemang%20%E2%80%93%20WORC&body=Hej%2C%0D%0A%0D%0AJag%20vill%20starta%20ett%20abonnemang%20p%C3%A5%20WORC.%0D%0A%0D%0AF%C3%B6retag%3A%0D%0AAntal%20l%C3%B6ner%2Fm%C3%A5n%3A%0D%0AAntal%20fakturor%2Fm%C3%A5n%3A%0D%0A%0D%0A";
 
-const GET_STARTED_MAIL =
-  "mailto:info@worc.se?subject=Jag%20vill%20komma%20ig%C3%A5ng%20med%20WORC";
+const CONTACT_MAIL = "mailto:info@worc.se?subject=Kontakt%20%E2%80%93%20WORC";
 
-const CONTACT_MAIL = "mailto:info@worc.se";
+function planMail(plan: string) {
+  return (
+    "mailto:info@worc.se?subject=" +
+    encodeURIComponent(`Starta abonnemang – WORC ${plan}`) +
+    "&body=" +
+    encodeURIComponent(
+      `Hej,\r\n\r\nJag vill starta ett abonnemang på WORC (${plan}).\r\n\r\nFöretag:\r\nAntal löner/mån:\r\nAntal fakturor/mån:\r\n\r\n`,
+    )
+  );
+}
+
+const PRODUCT_AREAS = [
+  {
+    title: "HR",
+    text: "Användare, anställningsavtal, personbegrepp, organisation och behörigheter.",
+  },
+  {
+    title: "Tid",
+    text: "Tidrapportering, frånvaro, schema, avvikelser och attestflöden.",
+  },
+  {
+    title: "Lön",
+    text: "Lönearter, regler, kollektivavtal, ackumulatorer, skatt, lönespec och kontroller.",
+  },
+  {
+    title: "Ekonomi",
+    text: "Bokföringsunderlag, kostnadsfördelning, utlägg, rapportering och framtida ekonomiflöden.",
+  },
+];
+
+const PLANS = [
+  {
+    name: "Start",
+    price: "299 kr",
+    period: "/mån",
+    blurb: "För mindre företag med låg administrativ volym.",
+    benchmark: "Riktmärke: upp till ca 10 löner/mån eller 100 fakturor/mån.",
+    cta: { label: "Starta abonnemang", href: planMail("Start") },
+    featured: false,
+  },
+  {
+    name: "Growth",
+    price: "599 kr",
+    period: "/mån",
+    blurb: "För växande företag med fler löner, fakturor och flöden.",
+    benchmark: "Riktmärke: upp till ca 50 löner/mån eller 500 fakturor/mån.",
+    cta: { label: "Starta abonnemang", href: planMail("Growth") },
+    featured: true,
+  },
+  {
+    name: "Scale",
+    price: "999 kr",
+    period: "/mån",
+    blurb: "För företag med högre administrativ belastning.",
+    benchmark: "Riktmärke: upp till ca 150 löner/mån eller 2 000 fakturor/mån.",
+    cta: { label: "Starta abonnemang", href: planMail("Scale") },
+    featured: false,
+  },
+  {
+    name: "Enterprise",
+    price: "Offert",
+    period: "",
+    blurb: "För större volymer, flera bolag eller mer komplexa flöden.",
+    benchmark: "Skräddarsytt utifrån verksamhet och volym.",
+    cta: { label: "Kontakta oss", href: CONTACT_MAIL },
+    featured: false,
+  },
+];
+
+const INCLUDED = [
+  "HR",
+  "Anställningar",
+  "Tid",
+  "Lön",
+  "Lönespecar",
+  "Fakturaunderlag",
+  "Fakturering",
+  "Ekonomi",
+  "Rapporter",
+  "Behörigheter",
+  "Standardflöden",
+];
 
 export default function Page() {
   return (
     <div className="min-h-screen bg-white text-zinc-900 antialiased">
+      {/* Top bar */}
+      <div className="sticky top-0 z-30 border-b border-zinc-200/80 bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <span className="text-base font-semibold tracking-[0.2em] text-zinc-950">
+            WORC
+          </span>
+          <nav className="hidden items-center gap-8 text-sm text-zinc-600 md:flex">
+            <a className="transition-colors hover:text-zinc-950" href="#produkt">
+              Produkt
+            </a>
+            <a className="transition-colors hover:text-zinc-950" href="#ingar">
+              Vad ingår
+            </a>
+            <a className="transition-colors hover:text-zinc-950" href="#priser">
+              Priser
+            </a>
+            <a className="transition-colors hover:text-zinc-950" href="#kontakt">
+              Kontakt
+            </a>
+          </nav>
+          <a
+            href={START_SUB_MAIL}
+            className="inline-flex items-center justify-center border border-zinc-900 bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-zinc-800"
+          >
+            Starta abonnemang
+          </a>
+        </div>
+      </div>
+
       {/* Hero */}
       <header className="relative overflow-hidden border-b border-zinc-200/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-20 pt-16 md:flex-row md:items-stretch md:gap-0 md:pb-24 md:pt-20 lg:pt-24">
-          <div className="flex flex-1 flex-col justify-center md:max-w-[52%] md:pr-12 lg:pr-16">
+          <div className="flex flex-1 flex-col justify-center md:max-w-[54%] md:pr-12 lg:pr-16">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-              Utvecklat i Stockholm
+              Verksamhetssystem · Utvecklat i Stockholm
             </p>
-            <h1 className="mt-5 text-balance text-4xl font-light leading-[1.12] tracking-tight text-zinc-950 md:text-5xl lg:text-[3.25rem]">
-              Mindre administration.
-              <br />
-              Mer tid till företaget.
+            <h1 className="mt-5 text-balance text-4xl font-light leading-[1.1] tracking-tight text-zinc-950 md:text-5xl lg:text-[3.5rem]">
+              Ett system för HR, ekonomi, tid och lön.
             </h1>
             <p className="mt-8 max-w-xl text-pretty text-lg leading-relaxed text-zinc-600 md:text-xl md:leading-relaxed">
-              WORC samlar lön, fakturering, tid och HR i ett enkelt system
-              utvecklat i Stockholm för svenska företag.
+              Byggt för företag som vill lämna manuella flöden, filer,
+              dubbelregistrering och avstämningskaos bakom sig.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <a
-                href={GET_STARTED_MAIL}
+                href={START_SUB_MAIL}
                 className="inline-flex items-center justify-center border border-zinc-900 bg-zinc-900 px-8 py-3.5 text-center text-sm font-medium text-white transition-colors duration-200 hover:bg-zinc-800"
               >
-                Kom igång
+                Starta abonnemang
               </a>
               <a
-                href={DEMO_MAIL}
+                href="#priser"
                 className="inline-flex items-center justify-center border border-zinc-300 bg-white px-8 py-3.5 text-center text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-zinc-400 hover:bg-zinc-50"
               >
-                Boka demo
+                Se priser
               </a>
             </div>
+            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-zinc-700">
+              <span>HR</span>
+              <span className="text-zinc-300">·</span>
+              <span>Ekonomi</span>
+              <span className="text-zinc-300">·</span>
+              <span>Tid</span>
+              <span className="text-zinc-300">·</span>
+              <span>Lön</span>
+            </div>
           </div>
-          <div className="relative min-h-[220px] flex-1 md:min-h-[320px] lg:min-h-[380px]">
+          <div className="relative min-h-[220px] flex-1 md:min-h-[320px] lg:min-h-[420px]">
             <div className="absolute inset-0 overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100 md:left-4 md:rounded-md">
               <Image
                 src="/images/hero-stockholm.png"
@@ -66,97 +182,74 @@ export default function Page() {
       </header>
 
       <main>
-        {/* Vad är WORC? */}
+        {/* Produktbeskrivning */}
         <section
-          className="border-b border-zinc-200/80 bg-zinc-50/80 py-20 md:py-28"
-          aria-labelledby="vad-ar-worc"
+          id="produkt"
+          className="scroll-mt-20 border-b border-zinc-200/80 bg-zinc-50/80 py-20 md:py-28"
+          aria-labelledby="produkt-rubrik"
         >
           <div className="mx-auto max-w-6xl px-6">
             <h2
-              id="vad-ar-worc"
+              id="produkt-rubrik"
               className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-500"
             >
-              Vad är WORC?
+              Ett sammanhållet system
             </h2>
-            <p className="mt-4 max-w-2xl text-balance text-2xl font-light leading-snug tracking-tight text-zinc-900 md:text-3xl">
-              Ett samlat arbetssätt för det som driver vardagen i bolaget — utan
-              att bygga ihop flera parallella system.
+            <p className="mt-4 max-w-3xl text-balance text-2xl font-light leading-snug tracking-tight text-zinc-900 md:text-3xl">
+              WORC kopplar ihop hela flödet — från anställning till tidrapport,
+              lön, bokföring och uppföljning.
             </p>
-            <ul className="mt-14 grid gap-10 md:grid-cols-2 md:gap-x-16 md:gap-y-12">
-              <li className="max-w-md border-l border-zinc-300 pl-6">
+            <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-x-16">
+              <div className="border-l border-zinc-300 pl-6">
                 <p className="text-base font-medium text-zinc-900">
-                  Allt samlat i ett system
+                  En gång, på rätt plats
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                  Lön, tid, fakturering och HR hänger ihop så att uppgifter inte
-                  behöver dubbelläggas eller följas upp manuellt i varje steg.
+                  En uppgift ska registreras en gång, på rätt plats, och sedan
+                  användas genom hela kedjan — utan dubbelregistrering.
                 </p>
-              </li>
-              <li className="max-w-md border-l border-zinc-300 pl-6">
+              </div>
+              <div className="border-l border-zinc-300 pl-6">
                 <p className="text-base font-medium text-zinc-900">
-                  Slippa flera olika verktyg
+                  Allt hänger ihop
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                  Färre gränssnitt och färre exportfiler — mer överblick för dig
-                  som ansvarar för verksamheten.
+                  HR, tid, lön och ekonomi delar samma data och regler, så att
+                  flödet går hela vägen utan parallella system.
                 </p>
-              </li>
-              <li className="max-w-md border-l border-zinc-300 pl-6">
+              </div>
+              <div className="border-l border-zinc-300 pl-6">
                 <p className="text-base font-medium text-zinc-900">
-                  Automatisering som minskar administration
+                  No touch workflow
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                  Rutiner som kan göras säkert av systemet ska inte ta tid från
-                  människor som hellre fokuserar på kunder och medarbetare.
+                  När grunddata, regler och flöden är rätt ska systemet kunna
+                  göra jobbet automatiskt — målet är ett flöde utan onödiga
+                  manuella steg.
                 </p>
-              </li>
-              <li className="max-w-md border-l border-zinc-300 pl-6">
-                <p className="text-base font-medium text-zinc-900">
-                  Svenska företag och svenska regelverk
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                  Utformad med svensk arbetsgivarvardag i åtanke — kollektivavtal,
-                  rutiner och rapportering som hör hemma här.
-                </p>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Funktioner */}
+        {/* Vad ingår? */}
         <section
-          className="border-b border-zinc-200/80 py-20 md:py-28"
-          aria-labelledby="funktioner"
+          id="ingar"
+          className="scroll-mt-20 border-b border-zinc-200/80 py-20 md:py-28"
+          aria-labelledby="ingar-rubrik"
         >
           <div className="mx-auto max-w-6xl px-6">
             <h2
-              id="funktioner"
+              id="ingar-rubrik"
               className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-500"
             >
-              Funktioner
+              Vad ingår?
             </h2>
             <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-zinc-600">
-              Fyra områden som ofta går hand i hand i små och medelstora bolag.
+              Fyra områden som hänger ihop i ett och samma system.
             </p>
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  title: "Lön",
-                  text: "Löneprocesser och uppföljning i linje med hur svenska arbetsgivare arbetar.",
-                },
-                {
-                  title: "Tid",
-                  text: "Tidrapportering som följer vardagen i verksamheten — enkelt för medarbetare och ledning.",
-                },
-                {
-                  title: "Fakturering",
-                  text: "Fakturor och intäktsflöden samlade så att ekonomin hänger ihop med det som levereras.",
-                },
-                {
-                  title: "HR",
-                  text: "Personalärenden, struktur och grundläggande HR-stöd på samma plattform som resten.",
-                },
-              ].map((item) => (
+              {PRODUCT_AREAS.map((item) => (
                 <article
                   key={item.title}
                   className="flex flex-col border border-zinc-200 bg-white p-8 transition-shadow duration-200 hover:shadow-sm"
@@ -173,115 +266,168 @@ export default function Page() {
           </div>
         </section>
 
-        {/* Prismodell */}
+        {/* Om grundaren */}
         <section
           className="border-b border-zinc-200/80 bg-zinc-50/80 py-20 md:py-28"
-          aria-labelledby="prismodell"
+          aria-labelledby="grundare-rubrik"
+        >
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+              <div>
+                <h2
+                  id="grundare-rubrik"
+                  className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-500"
+                >
+                  Vem bygger WORC?
+                </h2>
+                <p className="mt-6 text-pretty text-2xl font-light leading-snug tracking-tight text-zinc-900 md:text-3xl">
+                  WORC byggs av Teresia Sandberg.
+                </p>
+                <div className="mt-6 flex flex-col gap-4 text-pretty text-base leading-relaxed text-zinc-700 md:text-lg md:leading-relaxed">
+                  <p>
+                    Jag har arbetat med lön, arbetsrätt, kollektivavtal,
+                    HR-processer och systemarkitektur. WORC bygger på
+                    erfarenheten av hur komplext det faktiskt är när HR, tid, lön
+                    och ekonomi ska fungera tillsammans i verkligheten.
+                  </p>
+                  <p>
+                    Målet med WORC är att digitalisera en bransch som fortfarande
+                    är alldeles för beroende av manuella filer, dubbelregistrering,
+                    speciallösningar och personberoende kontroller.
+                  </p>
+                  <p>
+                    Visionen är no touch workflow: ett system där rätt uppgift
+                    registreras en gång, reglerna är spårbara och flödet kan gå
+                    hela vägen från HR till lön och ekonomi utan onödiga manuella
+                    steg.
+                  </p>
+                </div>
+              </div>
+              <div className="relative aspect-[4/3] min-h-[240px] overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100 lg:aspect-auto lg:min-h-[360px]">
+                <Image
+                  src="/images/grow.jpg"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-cover object-center grayscale"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Priser */}
+        <section
+          id="priser"
+          className="scroll-mt-20 border-b border-zinc-200/80 py-20 md:py-28"
+          aria-labelledby="priser-rubrik"
         >
           <div className="mx-auto max-w-6xl px-6">
             <h2
-              id="prismodell"
+              id="priser-rubrik"
               className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-500"
             >
-              Prismodell
+              Priser
             </h2>
             <p className="mt-4 max-w-2xl text-pretty text-2xl font-light leading-snug tracking-tight text-zinc-900 md:text-3xl">
               Ett pris. Hela flödet.
             </p>
             <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-zinc-600 md:text-lg">
-              WORC har fasta månadspriser baserade på företagets
-              administrativa volym. Alla centrala funktioner ingår från start:
-              HR, tid, lön, fakturering, ekonomi och rapportering. Du betalar
-              inte extra för varje modul, användare eller klick. Du vet vad
-              systemet kostar varje månad.
+              WORC har fasta månadspriser baserade på företagets administrativa
+              volym. Alla centrala funktioner ingår från start — du betalar inte
+              extra per modul, användare eller klick. Välj paket efter volym,
+              inte efter vilka funktioner du vill låsa upp.
             </p>
 
-            <div className="mt-12 border-l border-zinc-300 pl-6">
+            <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {PLANS.map((plan) => (
+                <article
+                  key={plan.name}
+                  className={[
+                    "flex flex-col border p-8",
+                    plan.featured
+                      ? "border-zinc-900 bg-zinc-900 text-white"
+                      : "border-zinc-200 bg-white",
+                  ].join(" ")}
+                >
+                  <div className="flex items-center justify-between">
+                    <p
+                      className={[
+                        "text-xs font-medium uppercase tracking-[0.15em]",
+                        plan.featured ? "text-zinc-400" : "text-zinc-500",
+                      ].join(" ")}
+                    >
+                      {plan.name}
+                    </p>
+                    {plan.featured && (
+                      <span className="border border-zinc-700 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.15em] text-zinc-300">
+                        Populär
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="mt-5 flex items-baseline gap-1">
+                    <span
+                      className={[
+                        "text-3xl font-light tracking-tight",
+                        plan.featured ? "text-white" : "text-zinc-950",
+                      ].join(" ")}
+                    >
+                      {plan.price}
+                    </span>
+                    {plan.period && (
+                      <span
+                        className={
+                          plan.featured ? "text-sm text-zinc-400" : "text-sm text-zinc-500"
+                        }
+                      >
+                        {plan.period}
+                      </span>
+                    )}
+                  </div>
+
+                  <p
+                    className={[
+                      "mt-4 text-sm leading-relaxed",
+                      plan.featured ? "text-zinc-300" : "text-zinc-600",
+                    ].join(" ")}
+                  >
+                    {plan.blurb}
+                  </p>
+                  <p
+                    className={[
+                      "mt-3 text-sm leading-relaxed",
+                      plan.featured ? "text-zinc-400" : "text-zinc-500",
+                    ].join(" ")}
+                  >
+                    {plan.benchmark}
+                  </p>
+
+                  <a
+                    href={plan.cta.href}
+                    className={[
+                      "mt-8 inline-flex items-center justify-center border px-6 py-3 text-sm font-medium transition-colors duration-200",
+                      plan.featured
+                        ? "border-white bg-white text-zinc-900 hover:bg-zinc-100"
+                        : "border-zinc-900 bg-zinc-900 text-white hover:bg-zinc-800",
+                    ].join(" ")}
+                  >
+                    {plan.cta.label}
+                  </a>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-14 border-l border-zinc-300 pl-6">
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
                 Ingår i alla paket
               </p>
               <ul className="mt-4 grid gap-x-8 gap-y-2 text-sm leading-relaxed text-zinc-700 sm:grid-cols-2 md:grid-cols-3">
-                <li>HR</li>
-                <li>Anställningar</li>
-                <li>Tid</li>
-                <li>Lön</li>
-                <li>Lönespecar</li>
-                <li>Fakturaunderlag</li>
-                <li>Fakturering</li>
-                <li>Ekonomi</li>
-                <li>Rapporter</li>
-                <li>Behörigheter</li>
-                <li>Standardflöden</li>
+                {INCLUDED.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </div>
-
-            <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <article className="flex flex-col border border-zinc-200 bg-white p-8">
-                <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-500">
-                  Start
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-                  För mindre företag med låg administrativ volym.
-                </p>
-                <p className="mt-6 text-sm leading-relaxed text-zinc-500">
-                  Riktmärke: upp till ca 10 löner/mån eller 100 fakturor/mån.
-                </p>
-                <p className="mt-auto border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
-                  299 kr/mån
-                </p>
-              </article>
-              <article className="flex flex-col border border-zinc-900 bg-zinc-900 p-8 text-white">
-                <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-400">
-                  Growth
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-300">
-                  För växande företag med fler löner, fakturor och flöden.
-                </p>
-                <p className="mt-6 text-sm leading-relaxed text-zinc-400">
-                  Riktmärke: upp till ca 50 löner/mån eller 500 fakturor/mån.
-                </p>
-                <p className="mt-auto border-t border-zinc-700 pt-8 text-sm font-medium text-white">
-                  599 kr/mån
-                </p>
-              </article>
-              <article className="flex flex-col border border-zinc-200 bg-white p-8">
-                <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-500">
-                  Scale
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-                  För företag med högre administrativ belastning.
-                </p>
-                <p className="mt-6 text-sm leading-relaxed text-zinc-500">
-                  Riktmärke: upp till ca 150 löner/mån eller 2 000
-                  fakturor/mån.
-                </p>
-                <p className="mt-auto border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
-                  999 kr/mån
-                </p>
-              </article>
-              <article className="flex flex-col border border-zinc-200 bg-white p-8">
-                <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-500">
-                  Enterprise
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-                  För större volymer, flera bolag eller mer komplexa flöden.
-                </p>
-                <p className="mt-6 text-sm leading-relaxed text-zinc-500">
-                  Skräddarsytt utifrån verksamhet och volym.
-                </p>
-                <p className="mt-auto border-t border-zinc-200 pt-8 text-sm font-medium text-zinc-900">
-                  Offert
-                </p>
-              </article>
-            </div>
-
-            <p className="mt-10 max-w-3xl text-pretty text-sm leading-relaxed text-zinc-600 md:text-base">
-              WORC säljs som en helhet — inte som moduler. Du väljer paket
-              efter administrativ volym, inte efter vilka funktioner du vill
-              låsa upp. Det är den samlade volymen som styr nivån: en kund med
-              få löner men stora fakturaflöden landar på en högre nivå än
-              löneantalet ensamt antyder.
-            </p>
 
             <div className="mt-12 grid gap-8 md:grid-cols-2">
               <div className="border-l border-zinc-300 pl-6">
@@ -293,9 +439,8 @@ export default function Page() {
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-600">
                   Kollektivavtal kräver löpande underhåll, tolkning och
-                  uppdatering. Årsavgiften täcker därför det fortsatta
-                  arbetet med att hålla avtalet uppdaterat och användbart
-                  i WORC.
+                  uppdatering. Årsavgiften täcker det fortsatta arbetet med att
+                  hålla avtalet uppdaterat och användbart i WORC.
                 </p>
               </div>
               <div className="border-l border-zinc-300 pl-6">
@@ -316,10 +461,10 @@ export default function Page() {
 
             <div
               className="mt-16 border-t border-zinc-200 pt-12"
-              aria-labelledby="kollektivavtal-leveranstider"
+              aria-labelledby="leveranstider-rubrik"
             >
               <h3
-                id="kollektivavtal-leveranstider"
+                id="leveranstider-rubrik"
                 className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-500"
               >
                 Kollektivavtal och leveranstider
@@ -361,9 +506,9 @@ export default function Page() {
                     Nytt kollektivavtal — snabbspår
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-                    För kunder som behöver komma igång snabbare finns
-                    möjlighet till snabbspår, där kollektivavtalet
-                    prioriteras i leveransen.
+                    För kunder som behöver komma igång snabbare finns möjlighet
+                    till snabbspår, där kollektivavtalet prioriteras i
+                    leveransen.
                   </p>
                   <ul className="mt-3 flex flex-col gap-1 text-sm leading-relaxed text-zinc-700">
                     <li>Tjänstemannaavtal: cirka 5 arbetsdagar</li>
@@ -375,60 +520,46 @@ export default function Page() {
           </div>
         </section>
 
-        {/* Om WORC */}
-        <section className="py-20 md:py-28" aria-labelledby="om-worc">
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-              <div>
-                <h2
-                  id="om-worc"
-                  className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-500"
-                >
-                  Om WORC
-                </h2>
-                <p className="mt-6 text-pretty text-lg leading-relaxed text-zinc-700 md:text-xl md:leading-relaxed">
-                  WORC byggs i Stockholm med fokus på svenska företag — från
-                  enmansbolag till organisationer med mer komplexa behov. Vi
-                  utgår från lokal kompetens om löner, avtal och vardagen som
-                  ekonomichef eller HR-ansvarig möter. Målet är trygghet och
-                  långsiktighet: ett system som känns lugnt att leva med, år efter
-                  år.
-                </p>
-              </div>
-              <div className="relative aspect-[4/3] min-h-[240px] overflow-hidden rounded-sm border border-zinc-200 bg-zinc-100 lg:aspect-auto lg:min-h-[320px]">
-                <Image
-                  src="/images/grow.jpg"
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover object-center grayscale"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Kontakt */}
+        {/* Kontakt / Starta abonnemang */}
         <section
-          className="border-t border-zinc-200/80 bg-zinc-50/80 py-16 md:py-20"
-          aria-labelledby="kontakt-cta"
+          id="kontakt"
+          className="scroll-mt-20 bg-zinc-50/80 py-20 md:py-28"
+          aria-labelledby="kontakt-rubrik"
         >
           <div className="mx-auto max-w-2xl px-6 text-center">
             <h2
-              id="kontakt-cta"
-              className="text-balance text-2xl font-light tracking-tight text-zinc-900 md:text-3xl"
+              id="kontakt-rubrik"
+              className="text-balance text-3xl font-light tracking-tight text-zinc-900 md:text-4xl"
             >
-              Vill du se om WORC passar ditt företag?
+              Redo att börja?
             </h2>
             <p className="mt-4 text-pretty text-base leading-relaxed text-zinc-600 md:text-lg">
-              Skicka ett mejl så tar vi ett första samtal.
+              Starta ett abonnemang eller kontakta oss för att prata om vilket
+              upplägg som passar bäst.
             </p>
-            <a
-              href={CONTACT_MAIL}
-              className="mt-8 inline-flex items-center justify-center border border-zinc-900 bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-zinc-800"
-            >
-              Kontakta oss
-            </a>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+              <a
+                href={START_SUB_MAIL}
+                className="inline-flex items-center justify-center border border-zinc-900 bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-zinc-800"
+              >
+                Starta abonnemang
+              </a>
+              <a
+                href={CONTACT_MAIL}
+                className="inline-flex items-center justify-center border border-zinc-300 bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-zinc-400 hover:bg-zinc-50"
+              >
+                Kontakta WORC
+              </a>
+            </div>
+            <p className="mt-6 text-sm text-zinc-500">
+              Eller mejla oss direkt på{" "}
+              <a
+                href={CONTACT_MAIL}
+                className="text-zinc-700 underline-offset-4 hover:underline"
+              >
+                info@worc.se
+              </a>
+            </p>
           </div>
         </section>
       </main>
